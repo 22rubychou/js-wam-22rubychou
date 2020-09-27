@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>打地鼠作業</title>
+    <link rel="shortcut icon" href="./素材/1601011998.ico" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Kosugi Maru", sans-serif;
+        width: 100vh;
+        height: 100vh;
+        overflow: hidden;
+        cursor: url(./素材/手1.png) 50 50, auto;
+        background: url(./素材/插圖.jpg) no-repeat center center/cover;
+      }
+      body:active {
+        cursor: url(./素材/手2.png) 0 200, auto;
+      }
+      #game {
+        position: relative;
+        margin: auto;
+        display: inline-block;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 40%);
+      }
+      #game td {
+        width: 100px;
+        height: 100px;
+        border: 1px solid transparent;
+      }
+      #start-button,
+      #again-button {
+        font-family: "Kosugi Maru", sans-serif;
+        font-size: 24px;
+        color: white;
+        width: 200px;
+        height: 100px;
+        background: rgba(255, 255, 255, 0.3);
+        border: none;
+        border-radius: 10% 10% 10% 10% / 20% 20% 20% 20%;
+        outline: none;
+        cursor: url(./素材/手1.png) 0 200, auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        letter-spacing: 0.3rem;
+      }
+      .red {
+        background: url(./素材/貓罐頭金-1.png) no-repeat center/100% 100px;
+        animation: blueani 0.5s forwards;
+        opacity: 0;
+      }
+
+      @keyframes redani {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes blueani {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .blue {
+        background: url(./素材/貓罐頭金-2.png) no-repeat center/100% 100px;
+        animation: redani 0.5s forwards;
+        opacity: 0;
+      }
+      .wrong {
+        animation: redani 0.5s forwards;
+        background: url(./素材/貓罐頭銀-1.png) no-repeat center/100px 100%;
+      }
+      .wrong2 {
+        animation: blueani 0.5s forwards;
+        background: url(./素材/貓罐頭銀-2.png) no-repeat center/100px 100%;
+      }
+      .hole7 {
+        position: absolute;
+        top: 150%;
+        left: -30%;
+      }
+      .hole8 {
+        position: absolute;
+        top: 200%;
+        left: 50%;
+      }
+      .hole9 {
+        position: absolute;
+        top: 200%;
+        left: 230%;
+      }
+      .hole4 {
+        position: absolute;
+        top: 60%;
+        left: 300%;
+      }
+      .hole5 {
+        position: absolute;
+        top: 150%;
+        left: 300%;
+      }
+
+      .hole1 {
+        position: relative;
+        left: 230%;
+      }
+      .hole6 {
+        position: relative;
+        left: -50%;
+      }
+      .hole2 {
+        position: absolute;
+        left: 140%;
+        top: 160%;
+      }
+      #scorebox {
+        width: 300px;
+        height: 200px;
+        border-radius: 15%;
+        background: rgb(255, 255, 255, 1);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1rem;
+        text-align: center;
+        line-height: 30px;
+        box-sizing: border-box;
+        padding-top: 46px;
+        padding-bottom: 46px;
+        padding-right: 8px;
+        padding-left: 8px;
+        z-index: 999;
+        letter-spacing: 0.3rem;
+
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="scorebox">dfdfdfd</div>
+    <table id="game">
+      <tr>
+        <td class="hole7"></td>
+        <td class="hole8"></td>
+        <td class="hole9"></td>
+      </tr>
+      <tr>
+        <td class="hole4"></td>
+        <td class="hole5"></td>
+        <td class="hole6"></td>
+      </tr>
+      <tr>
+        <td class="hole1"></td>
+        <td class="hole2"></td>
+        <td class="hole3"></td>
+      </tr>
+    </table>
+    <input type="button" value="開始遊戲" id="start-button" />
+
+    <p id="scorep">目前分數 : <span id="text-score"></span></p>
+
+    <script>
+      const holes = document.querySelectorAll("#game td");
+      const startBtn = document.getElementById("start-button");
+      const textScore = document.getElementById("text-score");
+      const scorep = document.getElementById("scorep");
+      const scorebox = document.getElementById("scorebox");
+
+      let score = 0;
+      let isInGame = false;
+      let timer = 0;
+      scorep.style.color = "transparent";
+      scorebox.style.display = "none";
+      let goldcam = 0;
+      let slivercam = 0;
+
+      startBtn.onclick = () => {
+        startBtn.disabled = true;
+        startBtn.style.color = "rgb(155, 50, 50)";
+        startBtn.style.display = "none";
+
+        isInGame = true;
+
+        score = 0;
+
+        timer = setInterval(start, 2000);
+        setTimeout(end, 14000);
+
+        start();
+      };
+      const start = () => {
+        for (const hole of holes) {
+          hole.classList.remove("red");
+          hole.classList.remove("blue");
+          hole.classList.remove("wrong");
+          hole.classList.remove("wrong2");
+        }
+
+        for (let i = 0; i < 3; i++) {
+          const ran = Math.floor(Math.random() * 9);
+          holes[ran].classList.add("blueani");
+          holes[ran].classList.add("red");
+        }
+        for (let i = 0; i < 3; i++) {
+          const ran = Math.floor(Math.random() * 9);
+          holes[ran].classList.remove("red");
+          holes[ran].classList.add("redani");
+          holes[ran].classList.add("wrong");
+        }
+      };
+
+      const end = () => {
+        clearInterval(timer);
+
+        for (const hole of holes) {
+          hole.classList.remove("red");
+          hole.classList.remove("blue");
+          hole.classList.remove("wrong");
+          hole.classList.remove("wrong2");
+        }
+
+        startBtn.disabled = false;
+        startBtn.style.color = "white";
+        isInGame = false;
+
+        let sec = 0;
+        scorebox.style.display = "initial";
+        scorebox.style.color = "rgb(125, 195, 188)";
+        if (score <= 5) {
+          scorebox.innerText = `你得了${score}分，開了${goldcam}個金色罐罐、${slivercam}個銀罐罐，
+            請幫忙開更多金色罐罐QAQ
+            等待幾秒重新開始遊戲～`;
+        }
+        if (score > 5 && score < 10) {
+          scorebox.innerText = `你得了${score}分，開了${goldcam}個金色罐罐、${slivercam}個銀罐罐，
+            這個數量只能吃個八分飽啦
+            等待幾秒重新開始遊戲～`;
+        }
+        if (score >= 10) {
+          scorebox.innerText = `你得了${score}分，開了${goldcam}個金色罐罐、${slivercam}個銀罐罐，
+            小饅頭吃的超級撐！！！
+            等待幾秒重新開始遊戲～`;
+        }
+        setInterval(() => {
+          sec++;
+          if (sec == 8) {
+            scorebox.style.display = "none";
+          }
+        }, 1000);
+
+        startBtn.style.display = "initial";
+      };
+
+      for (const hole of holes) {
+        hole.onclick = () => {
+          if (hole.classList.contains("red")) {
+            score++;
+            goldcam++;
+            textScore.innerText = score;
+            hole.classList.remove("red");
+            hole.classList.add("blue");
+            hole.classList.add("blueani");
+          } else if (hole.classList.contains("wrong")) {
+            score--;
+            slivercam++;
+            textScore.innerText = score;
+            hole.classList.add("blueani");
+            hole.classList.add("wrong2");
+          } else {
+          }
+        };
+      }
+    </script>
+  </body>
+</html>

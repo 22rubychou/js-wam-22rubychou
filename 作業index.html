@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        overflow: hidden;
+      }
+
+      #box {
+        width: 500px;
+        height: 500px;
+        margin: auto;
+        border: 5px solid transparent;
+        border-radius: 15%;
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+      .one {
+        animation: oneani 1s forwards;
+        background: url("素材/故事1.png") no-repeat center center/cover;
+      }
+
+      @keyframes one {
+        from {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        to {
+          display: none;
+        }
+      }
+      .two {
+        opacity: 0;
+        animation: twoani 3s forwards;
+        background: url("./素材/故事2.png") no-repeat center center/cover;
+      }
+      .two {
+        opacity: 0;
+        animation: twoani 3s forwards;
+        background: url("./素材/故事2.png") no-repeat center center/cover;
+      }
+      .three {
+        opacity: 0;
+        animation: oneani 3s forwards;
+        background: url("./素材/故事3.png") no-repeat center center/cover;
+      }
+      .four {
+        opacity: 0;
+        animation: twoani 3s forwards;
+        background: url("./素材/故事4.png") no-repeat center center/cover;
+      }
+      .five {
+        opacity: 0;
+        animation: oneani 3s forwards;
+        background: url("./素材/故事5.png") no-repeat center center/cover;
+      }
+      @keyframes twoani {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes oneani {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      #nextbtn,
+      #nextbtn2,
+      #nextbtn3,
+      #nextbtn4,
+      #startbtn2 {
+        font-family: "Kosugi Maru", sans-serif;
+        color: rgb(125, 195, 188);
+        border: none;
+        background: transparent;
+        font-size: 1.2rem;
+        position: absolute;
+        left: 65%;
+        top: 80%;
+        transform: translate(-50%, 0);
+        letter-spacing: 0.3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box" class="one"></div>
+    <input type="button" value=">>下一頁" id="nextbtn" />
+    <input type="button" value=">>下一頁" id="nextbtn2" />
+    <input type="button" value=">>下一頁" id="nextbtn3" />
+    <input type="button" value=">>遊戲說明" id="nextbtn4" />
+    <input type="button" value=">>進入遊戲" id="startbtn2" />
+
+    <script>
+      const box = document.getElementById("box");
+      const nextbtn = document.getElementById("nextbtn");
+      const nextbtn2 = document.getElementById("nextbtn2");
+      const nextbtn3 = document.getElementById("nextbtn3");
+      const nextbtn4 = document.getElementById("nextbtn4");
+      const startbtn2 = document.getElementById("startbtn2");
+
+      startbtn2.style.display = "none";
+      nextbtn.style.display = "initial";
+      nextbtn2.style.display = "none";
+      nextbtn3.style.display = "none";
+      nextbtn4.style.display = "none";
+
+      nextbtn.onclick = () => {
+        box.classList.remove("one");
+        box.classList.add("twoani");
+        box.classList.add("two");
+        nextbtn.style.display = "none";
+        nextbtn2.style.display = "initial";
+      };
+      nextbtn2.onclick = () => {
+        box.classList.remove("two");
+        box.classList.add("oneani");
+        box.classList.add("three");
+        nextbtn2.style.display = "none";
+        nextbtn3.style.display = "initial";
+      };
+      nextbtn3.onclick = () => {
+        box.classList.remove("three");
+        box.classList.add("twoani");
+        box.classList.add("four");
+        nextbtn3.style.display = "none";
+        nextbtn4.style.display = "initial";
+      };
+      nextbtn4.onclick = () => {
+        box.classList.remove("four");
+        box.classList.add("oneani");
+        box.classList.add("five");
+        nextbtn4.style.display = "none";
+        startbtn2.style.display = "initial";
+      };
+
+      startbtn2.onclick = () => {
+        location.href = "./作業p2.html";
+      };
+    </script>
+  </body>
+</html>
