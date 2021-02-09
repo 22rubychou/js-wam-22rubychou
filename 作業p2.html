@@ -246,16 +246,19 @@
           scorebox.innerText = `你得了${score}分，開了${goldcam}個金色罐罐、${slivercam}個銀罐罐，
             請幫忙開更多金色罐罐QAQ
             等待幾秒重新開始遊戲～`;
+          goldcam = 0
         }
         if (score > 5 && score < 10) {
           scorebox.innerText = `你得了${score}分，開了${goldcam}個金色罐罐、${slivercam}個銀罐罐，
             這個數量只能吃個八分飽啦
             等待幾秒重新開始遊戲～`;
+          goldcam = 0
         }
         if (score >= 10) {
           scorebox.innerText = `你得了${score}分，開了${goldcam}個金色罐罐、${slivercam}個銀罐罐，
             小饅頭吃的超級撐！！！
             等待幾秒重新開始遊戲～`;
+          goldcam = 0
         }
         setInterval(() => {
           sec++;
